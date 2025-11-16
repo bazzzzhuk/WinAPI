@@ -1,7 +1,17 @@
-#include<Windows.h>
+﻿#include<Windows.h>
 #include"resource.h"
+#include<commctrl.h>
+#include<iostream>
+//Думаю прикол с этой строкой:
+#pragma comment(linker,"\"/manifestdependency:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+//Возможно это ..., но не уверен, я такие штуки никогда не делал.
+// Можно просто вывод текста в edit но уже увидел такой вариант)
+//Давайте я сам посмотрю, возможно до завтра разберусь) ОК, я и сам ещё погугулю
+//Можете COMMIT сделать?
+CONST CHAR TEXT_IN_LOGIN[] = "Введите Логин: ";
 
 BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+//BOOL Edit_SetCueBannerText(HWND hwnd, LPCWSTR lpcwText);
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT nCmdShow)
 {
@@ -23,14 +33,18 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg)
 	{
-	case WM_INITDIALOG://����������� ���� ��� ��� ������� ����. 
+	case WM_INITDIALOG://Выполняется один раз при запуске окна. 
 	{
 		HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON1));
 		SendMessage(hwnd, WM_SETICON, 0, (LPARAM)hIcon);
+		HWND hEditLogin = GetDlgItem(hwnd, IDC_EDIT_LOGIN);
+		setlocale(LC_ALL, "");
+		//SetConsoleCP(866);
+		SendMessageA((hEditLogin), EM_SETCUEBANNER/*(0x1500+1)*/, TRUE, (LPARAM)TEXT_IN_LOGIN);
 		//SetFocus(GetDlgItem(hwnd, IDC_EDIT_LOGIN));
 	}
 		break;
-	case WM_COMMAND:// ������������ ������� � ���������� � �����.
+	case WM_COMMAND:// Обрабатывает команды с клавиатуры и мышки.
 		switch (LOWORD(wParam))
 		{
 		case IDC_BUTTON_COPY:
@@ -44,14 +58,14 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 			break;
 		case IDOK:
-			MessageBox(NULL, "������ ������� ��", "Info", MB_OK | MB_ICONINFORMATION);
+			MessageBox(NULL, "Нажата клавиша ОК", "Info", MB_OK | MB_ICONINFORMATION);
 			break;
 		case IDCANCEL:
 			EndDialog(hwnd, 0);
 			break;
 		}
 		break;
-	case WM_CLOSE:// ����������� ��� ������� ������ 'X'.
+	case WM_CLOSE:// Выполняется при нажатии кнопки 'X'.
 		EndDialog(hwnd, 0);
 	}
 	return FALSE;

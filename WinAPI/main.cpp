@@ -2,13 +2,13 @@
 #include"resource.h"
 #include<commctrl.h>
 #include<iostream>
-//Думаю прикол с этой строкой:
+
+//#pragma comment(lib, "comctl32.lib")
 #pragma comment(linker,"\"/manifestdependency:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
-//Возможно это ..., но не уверен, я такие штуки никогда не делал.
-// Можно просто вывод текста в edit но уже увидел такой вариант)
-//Давайте я сам посмотрю, возможно до завтра разберусь) ОК, я и сам ещё погугулю
-//Можете COMMIT сделать?
-CONST CHAR TEXT_IN_LOGIN[] = "Введите Логин: ";
+//#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+
+
+CONST WCHAR TEXT_IN_LOGIN[] = L"Введите Логин: ";
 
 BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 //BOOL Edit_SetCueBannerText(HWND hwnd, LPCWSTR lpcwText);
@@ -40,7 +40,8 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		HWND hEditLogin = GetDlgItem(hwnd, IDC_EDIT_LOGIN);
 		setlocale(LC_ALL, "");
 		//SetConsoleCP(866);
-		SendMessageA((hEditLogin), EM_SETCUEBANNER/*(0x1500+1)*/, TRUE, (LPARAM)TEXT_IN_LOGIN);
+		SendMessage((hEditLogin), EM_SETCUEBANNER/*(0x1500+1)*/, TRUE, (LPARAM) TEXT_IN_LOGIN);
+		//SendMessage((hEditLogin), EM_SETCUEBANNER/*(0x1500+1)*/, TRUE, (LPARAM) L"Введите Логин: ");
 		//SetFocus(GetDlgItem(hwnd, IDC_EDIT_LOGIN));
 	}
 		break;

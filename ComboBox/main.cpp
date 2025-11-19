@@ -42,6 +42,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			CONST INT SIZE = 256;
 			CHAR buf[SIZE] = {};
 			INT select_key = ComboBox_GetCurSel(hCombo);
+			//INT select_key = SendMessage(hCombo, CB_GETCURSEL, 0, 0);
 			SendMessage(hCombo, CB_GETLBTEXT, select_key, (LPARAM)buf);
 #ifdef _UNICODE
 			wostringstream oss;
@@ -49,9 +50,15 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			ostringstream oss;
 #endif
 			oss << select_key;
-			CHAR End_Message[SIZE] = {};
-			wsprintf(End_Message,"Вы выбрали элемент № %s со значением '%s'", oss.str().c_str(), buf);
-			MessageBox(NULL, End_Message, "Info", MB_OK | MB_ICONINFORMATION);
+			if(select_key != CB_ERR){
+				CHAR End_Message[SIZE] = {};
+				wsprintf(End_Message, "Вы выбрали элемент № %i со значением '%s'", select_key, buf);
+				MessageBox(hwnd, End_Message, "Info", MB_OK | MB_ICONINFORMATION);
+			}
+			else
+			{
+				MessageBox(NULL, "Вы ничего не выбрали!", "Info", MB_OK | MB_ICONERROR);
+			}
 		}
 		break;
 		case IDCANCEL:

@@ -117,8 +117,7 @@ BOOL CALLBACK DlgNewElement(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			CONST INT SIZE = 256;
 			CHAR buf[SIZE] = {};
 			SendMessage(hCombo2, WM_GETTEXT, SIZE, (LPARAM)buf);
-
-			//MessageBox(hwnd, (LPCSTR)buf, "Добавлено:", MB_OK | MB_ICONINFORMATION);
+			MessageBox(hwnd, (LPCSTR)buf, "Добавлено:", MB_OK | MB_ICONINFORMATION);
 			SendMessage(hEditList, LB_ADDSTRING, 0, (LPARAM)buf);
 			EndDialog(hwnd, 0);
 		}

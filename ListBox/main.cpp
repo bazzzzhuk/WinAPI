@@ -1,11 +1,11 @@
 #include<Windows.h>
 #include"resource.h"
-
 #include<commctrl.h>
 #include<iostream>
 #include<windowsx.h>
 #include<cstdio>
 #include<wchar.h>
+#pragma comment(linker,"\"/manifestdependency:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
 HINSTANCE hInstance;
 
@@ -100,7 +100,10 @@ BOOL CALLBACK DlgNewElement(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_INITDIALOG:
 	{
-		SetFocus(GetDlgItem(hwnd, IDC_EDIT2));
+		CONST WCHAR TEXT_IN_EDIT[] = L"Введите новый элемент";
+		//SetFocus(GetDlgItem(hwnd, IDC_EDIT2));
+		HWND hCombo2 = GetDlgItem(hwnd, IDC_EDIT2);
+		SendMessage(hCombo2, EM_SETCUEBANNER/*(0x1500+1)*/, TRUE, (LPARAM)TEXT_IN_EDIT);
 	}
 	break;
 	case WM_COMMAND:
@@ -114,9 +117,16 @@ BOOL CALLBACK DlgNewElement(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			CONST INT SIZE = 256;
 			CHAR buf[SIZE] = {};
 			SendMessage(hCombo2, WM_GETTEXT, SIZE, (LPARAM)buf);
-			MessageBox(hwnd, (LPCSTR)buf, "Информация", MB_OK | MB_ICONINFORMATION);
+
+			//MessageBox(hwnd, (LPCSTR)buf, "Добавлено:", MB_OK | MB_ICONINFORMATION);
 			SendMessage(hEditList, LB_ADDSTRING, 0, (LPARAM)buf);
+			EndDialog(hwnd, 0);
 		}
+		case IDCANCEL:
+
+			HWND hCombo2 = GetDlgItem(hwnd, IDC_EDIT2);
+			SendMessage(hCombo2, WM_SETTEXT, TRUE, (LPARAM)"");
+			//EndDialog(hwnd, 0);		
 		}
 	}
 	break;

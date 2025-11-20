@@ -57,7 +57,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			}
 			else
 			{
-				MessageBox(NULL, "Вы ничего не выбрали!", "Info", MB_OK | MB_ICONERROR);
+				MessageBox(hwnd, "Вы ничего не выбрали!", "Info", MB_OK | MB_ICONERROR);
 			}
 		}
 		break;

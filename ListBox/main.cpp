@@ -101,8 +101,8 @@ BOOL CALLBACK DlgNewElement(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_INITDIALOG:
 	{
 		CONST WCHAR TEXT_IN_EDIT[] = L"¬ведите новый элемент";
-		//SetFocus(GetDlgItem(hwnd, IDC_EDIT2));
 		HWND hCombo2 = GetDlgItem(hwnd, IDC_EDIT2);
+		SetFocus(GetDlgItem(hwnd, IDC_EDIT2));
 		SendMessage(hCombo2, EM_SETCUEBANNER/*(0x1500+1)*/, TRUE, (LPARAM)TEXT_IN_EDIT);
 	}
 	break;

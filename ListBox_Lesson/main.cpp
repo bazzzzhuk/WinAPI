@@ -1,4 +1,4 @@
-#include<Windows.h>
+п»ї#include<Windows.h>
 #include"resource.h"
 #include<WinUser.h>
 #include<wchar.h>
@@ -83,7 +83,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			//SendMessage(hListBox, LB_SETCURSEL, i, 0);
 			////SetFocus(hListBox);
 		//if(wParam == VK_SPACE)
-		case VK_SPACE:
+		case VK_RETURN:
 			{
 				SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(IDC_LIST1, LBN_DBLCLK), (LPARAM)GetDlgItem(hwnd, IDC_LIST1));
 				//SendMessage(hListBox, LB_SETCURSEL, i, 0);
@@ -126,7 +126,7 @@ BOOL CALLBACK DlgProcADD(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				SendMessage(hList, LB_ADDSTRING, 0, (LPARAM)sz_BUFFER);
 			else
 			{
-				MessageBox(hwnd, "Такой элемент уже существует", "Warning", MB_OK | MB_ICONWARNING);
+				MessageBox(hwnd, "РўР°РєРѕР№ СЌР»РµРјРµРЅС‚ СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", "Warning", MB_OK | MB_ICONWARNING);
 				break;
 			}
 		}
@@ -147,7 +147,7 @@ BOOL CALLBACK DlgProcEDIT(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_INITDIALOG:
 	{
-		SendMessage(hwnd, WM_SETTEXT, 0, (LPARAM)"Изменение элемента");
+		SendMessage(hwnd, WM_SETTEXT, 0, (LPARAM)"РР·РјРµРЅРµРЅРёРµ СЌР»РµРјРµРЅС‚Р°");
 		CHAR sz_buffer[256] = {};
 		HWND hListBox = GetDlgItem(GetParent(hwnd), IDC_LIST1);
 		HWND hEditItem = GetDlgItem(hwnd, IDC_EDIT);

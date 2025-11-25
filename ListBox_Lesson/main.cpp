@@ -1,4 +1,5 @@
 ﻿#include<Windows.h>
+#include<Windowsx.h>
 #include"resource.h"
 #include<WinUser.h>
 #include<wchar.h>
@@ -51,9 +52,9 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				switch (LOWORD(wParam))
 				{
 				case 0x20:
-				{ 
-					SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(IDC_LIST1, LBN_DBLCLK), (LPARAM)GetDlgItem(hwnd, IDC_LIST1)); 
-					break; 
+				{
+					SendMessage(hwnd, WM_COMMAND, MAKEWPARAM(IDC_LIST1, LBN_DBLCLK), (LPARAM)GetDlgItem(hwnd, IDC_LIST1));
+					break;
 				}
 				}
 				break;
@@ -72,6 +73,40 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			HWND hListBox = GetDlgItem(hwnd, IDC_LIST1);
 			INT i = SendMessage(hListBox, LB_GETCURSEL, 0, 0);
 			SendMessage(hListBox, LB_DELETESTRING, i, 0);
+		}
+		break;
+		case IDC_BUTTON_UP:
+		{
+			CHAR sz_buffer[256] = {};
+			HWND hListBox = GetDlgItem(hwnd, IDC_LIST1);
+				INT i = SendMessage(hListBox, LB_GETCURSEL, 0, 0);
+			if (i != LB_ERR)
+			{
+				INT ii = SendMessage(hListBox, LB_GETCOUNT, 0, 0);
+				SendMessage(hListBox, LB_GETTEXT, i, (LPARAM)sz_buffer);
+				SendMessage(hListBox, LB_DELETESTRING, i, 0);
+				SendMessage(hListBox, LB_INSERTSTRING, i - 1, (LPARAM)sz_buffer);
+				if (i - 1 < 0)i = ii;
+				SendMessage(hListBox, LB_SETCURSEL, i - 1, 0);
+			}
+				break;
+		}
+		case IDC_BUTTON_DOWN:
+		{
+			CHAR sz_buffer[256] = {};
+			HWND hListBox = GetDlgItem(hwnd, IDC_LIST1);
+			INT i = SendMessage(hListBox, LB_GETCURSEL, 0, 0);
+			if (i != LB_ERR)
+			{
+				INT ii = SendMessage(hListBox, LB_GETCOUNT, 0, 0);
+				SendMessage(hListBox, LB_GETTEXT, i, (LPARAM)sz_buffer);
+				SendMessage(hListBox, LB_DELETESTRING, i, 0);
+				if (i + 1 >= ii)i = -1;
+				i++;
+				SendMessage(hListBox, LB_INSERTSTRING, i, (LPARAM)sz_buffer);
+				SendMessage(hListBox, LB_SETCURSEL, i, 0);
+			}
+			break;
 		}
 		break;
 		case IDOK:

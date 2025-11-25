@@ -192,8 +192,16 @@ BOOL CALLBACK DlgProcEDIT(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			HWND hEditItem = GetDlgItem(hwnd, IDC_EDIT);
 			INT i = SendMessage(hListBox, LB_GETCURSEL, 0, 0);
 			SendMessage(hEditItem, WM_GETTEXT, 256, (LPARAM)sz_buffer);
-			SendMessage(hListBox, LB_DELETESTRING, i, 0);
-			SendMessage(hListBox, LB_INSERTSTRING, i, (LPARAM)sz_buffer);
+			if (SendMessage(hListBox, LB_FINDSTRINGEXACT, 0, (LPARAM)sz_buffer) == LB_ERR)
+			{
+				SendMessage(hListBox, LB_DELETESTRING, i, 0);
+				SendMessage(hListBox, LB_INSERTSTRING, i, (LPARAM)sz_buffer);
+			}
+			else
+			{
+				MessageBox(hwnd, "Такой элемент уже существует", "Warning", MB_OK | MB_ICONWARNING);
+				break;
+			}
 			EndDialog(hwnd, 0);
 		}
 		break;

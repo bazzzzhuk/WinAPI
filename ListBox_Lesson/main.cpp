@@ -14,6 +14,7 @@ CONST CHAR* g_sz_VALUES[] = { "This", "is", "my", "first", "List","Box" };//Use 
 BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK DlgProcADD(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK DlgProcEDIT(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+VOID SaveList(HWND hwnd, CONST CHAR filename[]);
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT nCmdShow)
 {
@@ -79,7 +80,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			CHAR sz_buffer[256] = {};
 			HWND hListBox = GetDlgItem(hwnd, IDC_LIST1);
-				INT i = SendMessage(hListBox, LB_GETCURSEL, 0, 0);
+			INT i = SendMessage(hListBox, LB_GETCURSEL, 0, 0);
 			if (i != LB_ERR)
 			{
 				INT ii = SendMessage(hListBox, LB_GETCOUNT, 0, 0);
@@ -89,7 +90,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				if (i - 1 < 0)i = ii;
 				SendMessage(hListBox, LB_SETCURSEL, i - 1, 0);
 			}
-				break;
+			break;
 		}
 		case IDC_BUTTON_DOWN:
 		{
@@ -112,6 +113,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case IDOK:
 			break;
 		case IDCANCEL:
+			SaveList(hwnd, "list.txt");
 			EndDialog(hwnd, 0);
 		}
 		break;
@@ -154,6 +156,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	//}
 
 	case WM_CLOSE:
+		SaveList(hwnd, "list.txt");
 		EndDialog(hwnd, 0);
 		break;
 	}
@@ -249,4 +252,32 @@ BOOL CALLBACK DlgProcEDIT(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		EndDialog(hwnd, 0);
 	}
 	return FALSE;
+}
+VOID SaveList(HWND hwnd, CONST CHAR filename[])
+{
+	CONST INT SIZE = 32768;
+	CHAR sz_buffer[SIZE] = {};
+	HWND hList = GetDlgItem(hwnd, IDC_LIST1);
+	INT n = SendMessage(hList, LB_GETCOUNT, 0, 0);
+
+	for (int i = 0; i < n; i++)
+	{
+		CHAR sz_item[256] = {};
+		SendMessage(hList, LB_GETTEXT, i, (LPARAM)sz_item);
+		lstrcat(sz_buffer, sz_item);
+		lstrcat(sz_buffer, "\n");
+	}
+
+	HANDLE hFile = CreateFile
+	(
+		filename,
+		GENERIC_WRITE, 
+		0, 
+		NULL, 
+		CREATE_ALWAYS,
+		FILE_ATTRIBUTE_NORMAL,
+		NULL
+	);
+	DWORD dwBytesWritten = 0;
+	WriteFile(hFile, sz_buffer, strlen(sz_buffer) + 1, &dwBytesWritten, NULL);
 }

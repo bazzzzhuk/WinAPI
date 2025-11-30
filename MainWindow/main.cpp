@@ -3,6 +3,8 @@
 #include"resource.h"
 
 CONST CHAR g_sz_WINDOW_CLASS[] = "My first window";
+INT Width_Window = (GetSystemMetrics(SM_CXSCREEN)*0.75);
+INT Height_Window = (GetSystemMetrics(SM_CYSCREEN)*0.75);
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -25,8 +27,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 	(hInstance, 
 		"starcraft-original\\c_f_4.cur",
 		IMAGE_CURSOR,
-		32,
-		32,
+		40,
+		40,
 		LR_LOADFROMFILE
 		);
 	wClass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
@@ -40,6 +42,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 		MessageBox(NULL, "Class registration failed", NULL, MB_OK | MB_ICONERROR);
 		return 0;
 	}
+
 	//Этап 2 Создание окна 
 	HWND hwnd = CreateWindowEx
 	(
@@ -47,8 +50,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 		g_sz_WINDOW_CLASS,//Имя класса окна
 		g_sz_WINDOW_CLASS,//Заголовок окна
 		WS_OVERLAPPEDWINDOW,//Стиль окна. Стили всегда зависят от класса окна. WS_OVERLAPPEDWINDOW - главное окно.
-		CW_USEDEFAULT, CW_USEDEFAULT,//Position
-		500, 500,//size window
+		(GetSystemMetrics(SM_CXSCREEN) - Width_Window)/2,
+		(GetSystemMetrics(SM_CYSCREEN)-Height_Window)/2,
+		//Position
+		Width_Window, Height_Window,//size window
 		NULL,
 		NULL,//Для главного окна это ResourceID главного меню, для дочернего окна (Control) ResourceID дочернего окна (IDC_BUTTON_COPY)
 		hInstance,

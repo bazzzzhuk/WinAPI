@@ -2,8 +2,9 @@
 #include<Windows.h>
 #include"resource.h"
 
-CONST INT SIZE_g_sz = 128;
+#define IDC_BUTTON 1000
 
+CONST INT SIZE_g_sz = 128;
 CHAR g_sz_WINDOW_CLASS[SIZE_g_sz] = "This my first window!";
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -85,7 +86,23 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	switch (uMsg)
 	{
 	case WM_CREATE:
-		break;
+	{
+		HWND hButton = CreateWindowEx
+		(
+			NULL,
+			"Button",
+			"Кнопка",
+			WS_CHILD | WS_VISIBLE,
+			10, 10,
+			150, 80,
+			hwnd,
+			(HMENU)1000,//Для главного окна - это ResourceID главного меню,
+						//Для дочернего окна (элемента управления окна) - это ResourceID дочернего элемента.
+			GetModuleHandle(NULL),
+			NULL
+		);
+			break;
+	}
 	case WM_MOVE:
 	case WM_SIZE:
 	{
@@ -94,11 +111,18 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		CONST INT SIZE = 1024;
 		CHAR sz_buffer[SIZE]{};
 		wsprintf(sz_buffer, "%s Положение: X-->%i Y-->%i Размеры: Width-->%i Height-->%i",
-			g_sz_WINDOW_CLASS,rect.left+10, rect.top, rect.right - rect.left, rect.bottom - rect.top);
+			g_sz_WINDOW_CLASS,rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
 		SendMessage(hwnd, WM_SETTEXT, 0, (LPARAM)sz_buffer);
 		break;
 	}
 	case WM_COMMAND:
+	{
+		switch (LOWORD(wParam))
+		{
+		case IDC_BUTTON: MessageBox(hwnd, "CURSOR", "INFO", MB_OK | MB_ICONINFORMATION);
+		}
+
+	}
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);

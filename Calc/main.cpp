@@ -213,7 +213,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		CONST INT SIZE = 256;
 		static CHAR sz_Edit[SIZE] = {};
 		BOOL bool_expression = FALSE;
-		BOOL bool_operation = FALSE;
+		static BOOL bool_operation = FALSE;
 		CHAR sz_Enter[2] = {};
 		HWND hDisp = GetDlgItem(hwnd, IDC_DISPLAY);
 		SendMessage(hDisp, WM_GETTEXT, SIZE, (LPARAM)sz_Edit);
@@ -265,7 +265,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			case IDC_BUTTON_ASTER: number *= atoi(sz_Edit); break;
 			case IDC_BUTTON_SLASH: number /= atoi(sz_Edit); break;
 			}
-
+			enter_oper = 0;
 			SendMessage(hDisp, WM_SETTEXT, 0, (LPARAM)"0");
 		}
 		CONST INT SIZE1 = 1024;

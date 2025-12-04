@@ -83,7 +83,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 	return msg.wParam;
 }
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-{
+{	
 	switch (uMsg)
 	{
 	case WM_CREATE:
@@ -199,7 +199,31 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	}
 	break;
 	case WM_COMMAND:
-		break;
+	{
+		CONST INT SIZE = 1024;
+		CHAR sz_Edit[SIZE] = {};
+		CHAR sz_Enter[2] = {};
+		HWND hDisp = GetDlgItem(hwnd, IDC_DISPLAY);
+		SendMessage(hDisp, WM_GETTEXT, SIZE, (LPARAM)sz_Edit);
+		if (LOWORD(wParam) >= IDC_BUTTON_0 && LOWORD(wParam) <= IDC_BUTTON_9)
+		{
+			sz_Enter[0] = LOWORD(wParam) - 952;
+			if (lstrcmp(sz_Edit, "0"))lstrcat(sz_Edit, sz_Enter);
+			else lstrcpy(sz_Edit, sz_Enter);
+			SendMessage(hDisp, WM_SETTEXT, 0, (LPARAM)sz_Edit);
+			
+		}
+		if (LOWORD(wParam) == IDC_BUTTON_POINT && strchr(sz_Edit, '.') == 0)
+		{
+			lstrcat(sz_Edit, ".");
+			SendMessage(hDisp, WM_SETTEXT, 0, (LPARAM)sz_Edit);
+		}
+		if (LOWORD(wParam) == IDC_BUTTON_CLR)
+		{			
+			SendMessage(hDisp, WM_SETTEXT, 0, (LPARAM)"0");
+		}
+	}
+	break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;

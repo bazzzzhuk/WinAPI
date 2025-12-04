@@ -1,6 +1,14 @@
 #include<Windows.h>
 #include"resource.h"
 
+#include<float.h>
+#include<stdio.h>
+#include<iostream>
+#include<stdlib.h>
+#include<wchar.h>
+
+
+
 CONST CHAR g_sz_WINDOW_CLASS[] = "Calc PV_521";
 //--------------------------->
 CONST INT g_i_BUTTON_SIZE = 50;
@@ -83,7 +91,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 	return msg.wParam;
 }
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-{	
+{
 	switch (uMsg)
 	{
 	case WM_CREATE:
@@ -200,18 +208,24 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	break;
 	case WM_COMMAND:
 	{
-		CONST INT SIZE = 1024;
-		CHAR sz_Edit[SIZE] = {};
+		static INT number = 0;
+		static INT enter_oper = 0;
+		CONST INT SIZE = 256;
+		static CHAR sz_Edit[SIZE] = {};
+		BOOL bool_expression = FALSE;
+		BOOL bool_operation = FALSE;
 		CHAR sz_Enter[2] = {};
 		HWND hDisp = GetDlgItem(hwnd, IDC_DISPLAY);
 		SendMessage(hDisp, WM_GETTEXT, SIZE, (LPARAM)sz_Edit);
 		if (LOWORD(wParam) >= IDC_BUTTON_0 && LOWORD(wParam) <= IDC_BUTTON_9)
 		{
+			if (bool_operation)sz_Edit[0] = 0;
 			sz_Enter[0] = LOWORD(wParam) - 952;
 			if (lstrcmp(sz_Edit, "0"))lstrcat(sz_Edit, sz_Enter);
 			else lstrcpy(sz_Edit, sz_Enter);
 			SendMessage(hDisp, WM_SETTEXT, 0, (LPARAM)sz_Edit);
-			
+			bool_expression = TRUE;
+			bool_operation = FALSE;
 		}
 		if (LOWORD(wParam) == IDC_BUTTON_POINT && strchr(sz_Edit, '.') == 0)
 		{
@@ -219,9 +233,46 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			SendMessage(hDisp, WM_SETTEXT, 0, (LPARAM)sz_Edit);
 		}
 		if (LOWORD(wParam) == IDC_BUTTON_CLR)
-		{			
+		{
+			bool_expression = bool_operation = enter_oper = 0;
 			SendMessage(hDisp, WM_SETTEXT, 0, (LPARAM)"0");
 		}
+		if (LOWORD(wParam) >= IDC_BUTTON_PLUS && LOWORD(wParam) <= IDC_BUTTON_SLASH)
+		{
+			if (number == 0)
+			{
+				enter_oper = LOWORD(wParam);
+				bool_operation = TRUE;
+				number = atoi(sz_Edit);
+				bool_expression = FALSE;
+				SendMessage(hDisp, WM_SETTEXT, 0, (LPARAM)"0");
+			}
+			else
+			{
+				//SendMessage(hDisp, WM_SETTEXT, 0, (LPARAM)"0");
+				enter_oper = LOWORD(wParam);
+				bool_expression = FALSE;
+				bool_operation = TRUE;
+				SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_EQUAL), 0);
+			}
+		}
+		if (LOWORD(wParam) == IDC_BUTTON_EQUAL)
+		{
+			switch (enter_oper)
+			{
+			case IDC_BUTTON_PLUS: number += (atoi(sz_Edit)); break;
+			case IDC_BUTTON_MINUS: number -= atoi(sz_Edit); break;
+			case IDC_BUTTON_ASTER: number *= atoi(sz_Edit); break;
+			case IDC_BUTTON_SLASH: number /= atoi(sz_Edit); break;
+			}
+
+			SendMessage(hDisp, WM_SETTEXT, 0, (LPARAM)"0");
+		}
+		CONST INT SIZE1 = 1024;
+		CHAR sz_buffer[SIZE1]{};
+		wsprintf(sz_buffer, "%i %i", number, enter_oper);
+		SendMessage(hwnd, WM_SETTEXT, 0, (LPARAM)sz_buffer);
+
 	}
 	break;
 	case WM_DESTROY:

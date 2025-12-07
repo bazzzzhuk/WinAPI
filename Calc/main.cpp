@@ -203,6 +203,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	break;
 	case WM_COMMAND:
 	{		
+		SetFocus(hwnd);
 		HWND hEdit = GetDlgItem(hwnd, IDC_DISPLAY);
 		CONST INT SIZE = 256;
 		CHAR sz_buffer[SIZE] = {};

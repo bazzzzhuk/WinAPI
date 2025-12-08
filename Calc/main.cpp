@@ -490,3 +490,8 @@ VOID Equal(HWND hwnd, INT OperIDC)
 	//oper_on = FALSE;
 
 }
+INT Test(INT, BOOL)
+{
+	INT x = 0;
+	return x;
+}

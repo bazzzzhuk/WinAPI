@@ -28,6 +28,9 @@
 #define IDC_BUTTON_CLR			1016 // Clear
 #define IDC_BUTTON_EQUAL		1017 // =
 
+#define IDB_BACKGROUND_1		2001
+
+
 
 
 

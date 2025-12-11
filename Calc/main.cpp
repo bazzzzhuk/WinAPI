@@ -120,7 +120,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 					WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | BS_BITMAP, /*
 					g_i_BUTTON_START_X + (g_i_BUTTON_SIZE + g_i_INTERVAL) * j,
 					g_i_BUTTON_START_Y + (g_i_BUTTON_SIZE + g_i_INTERVAL) * (2 - i / 3),*/
-
 					X_BUTTON_POSITION(j), Y_BUTTON_POSITION(2 - i / 3),
 					g_i_BUTTON_SIZE, g_i_BUTTON_SIZE,
 					hwnd,
@@ -452,4 +451,21 @@ VOID SetSkin(HWND hwnd, CONST CHAR skin[])
 		);
 		SendMessage(hButton, BM_SETIMAGE, 0, (LPARAM)bmpButton);
 	}
+	const char* sz_button_name[] = { "point","plus", "minus","aster","slash","bsp","clr","equal"};
+	for (int i = 0; i < 8; i++)
+	{
+		HWND hButton = GetDlgItem(hwnd, IDC_BUTTON_POINT + i);
+		sprintf(sz_filename, "ButtonsBMP\\%s\\button_%s.bmp", skin, sz_button_name[i]);
+		HBITMAP bmpButton = (HBITMAP)LoadImage
+		(
+			GetModuleHandle(NULL),
+			sz_filename,
+			IMAGE_BITMAP,
+			g_i_BUTTON_SIZE,
+			i == 7 ? g_i_DOUBLE_BUTTON_SIZE : g_i_BUTTON_SIZE,
+			LR_LOADFROMFILE
+		);
+		SendMessage(hButton, BM_SETIMAGE, 0, (LPARAM)bmpButton);
+	}
+
 }

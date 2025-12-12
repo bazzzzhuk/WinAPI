@@ -243,12 +243,24 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		SetSkin(hwnd, (SETBACK == 2 ? "square_blue" : "metal_mistral"));
 	}
 	break;
+	case WM_CTLCOLOREDIT:
+	{
+		HDC hdc = (HDC)wParam; // С сообщением WM_CTLCOLOREDIT в wParam принимается HDC EditControl
+		SetBkMode(hdc, OPAQUE); //Делаем фон hEdit непрозрачным
+		SetBkColor(hdc, RGB(0, 150, 100));
+		HBRUSH hBrush = CreateSolidBrush(RGB(0, 70, 100));
+		SetTextColor(hdc, RGB(155,200,150));
+		SetClassLongPtr(hwnd, GCLP_HBRBACKGROUND, (LONG_PTR)hBrush);
+		SendMessage(hwnd, WM_ERASEBKGND, wParam, 0);
+		return (LRESULT)hBrush;
+	}
+	break;
 	case WM_PAINT:
 	{
 		HBRUSH hbrsh;
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hwnd, &ps);
-		if (SETBACK == 2)hbrsh = CreatePatternBrush((HBITMAP)LoadImage(NULL, "background_2.bmp", IMAGE_BITMAP, 290, 280, LR_LOADFROMFILE));
+		if (SETBACK == 2)hbrsh = CreatePatternBrush((HBITMAP)LoadImage(NULL, "background_2.bmp", IMAGE_BITMAP, 290, 290, LR_LOADFROMFILE));
 		else hbrsh = CreatePatternBrush((HBITMAP)LoadImage(NULL, "background_2.bmp", IMAGE_BITMAP, 290, 280, LR_LOADFROMFILE));
 		// All painting occurs here, between BeginPaint and EndPaint.
 		SendMessage(hwnd, WM_ERASEBKGND, 0, 0);

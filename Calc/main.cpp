@@ -5,6 +5,12 @@
 #include<iostream>
 #include <stdio.h>
 #include"resource.h"
+#include<wingdi.h>
+#include <CommCtrl.h>
+#include<WinDef.h>
+
+//#define SETBACK(enter_skin) "background_(enter_skin)"
+
 
 CONST CHAR g_sz_WINDOW_CLASS[] = "Calc PV_521";
 //--------------------------->
@@ -29,6 +35,8 @@ CONST INT g_i_WINDOW_HEIGHT = g_i_DISPLAY_HEIGHT + g_i_START_Y + (g_i_BUTTON_SIZ
 
 CONST CHAR g_OPERATION[] = "+-*/";
 
+static INT SETBACK = 2;
+
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 VOID SetSkin(HWND hwnd, CONST CHAR skin[]);
 
@@ -46,6 +54,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 	wClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wClass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 	wClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	//wClass.hbrBackground = CreatePatternBrush((HBITMAP)LoadImage(hInstance, (SETBACK == 2 ? "background_2.bmp" : "background_1.bmp"), IMAGE_BITMAP, 290, 280, LR_LOADFROMFILE));
 	wClass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
 
 	wClass.hInstance = hInstance;
@@ -64,7 +73,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 		NULL,
 		g_sz_WINDOW_CLASS,
 		g_sz_WINDOW_CLASS,
-		WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX, //Style
+		WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX | SS_BITMAP, //Style
 		1500, 600,
 		g_i_WINDOW_WIDTH, g_i_WINDOW_HEIGHT,
 		NULL,
@@ -230,9 +239,43 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			GetModuleHandle(NULL),
 			NULL
 		);
-		SetSkin(hwnd, "square_blue");
+
+		SetSkin(hwnd, (SETBACK == 2 ? "square_blue" : "metal_mistral"));
 	}
 	break;
+	case WM_PAINT:
+	{
+		HBRUSH hbrsh;
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hwnd, &ps);
+		if (SETBACK == 2)hbrsh = CreatePatternBrush((HBITMAP)LoadImage(NULL, "background_2.bmp", IMAGE_BITMAP, 290, 280, LR_LOADFROMFILE));
+		else hbrsh = CreatePatternBrush((HBITMAP)LoadImage(NULL, "background_2.bmp", IMAGE_BITMAP, 290, 280, LR_LOADFROMFILE));
+		// All painting occurs here, between BeginPaint and EndPaint.
+		SendMessage(hwnd, WM_ERASEBKGND, 0, 0);
+		FillRect(hdc, &ps.rcPaint, (HBRUSH)(hbrsh));
+		EndPaint(hwnd, &ps);
+	}
+	//case WM_PAINT:
+	//{
+	//	SendMessage(hwnd, WM_ERASEBKGND, wParam, 0);
+	//	HBITMAP hImage = (HBITMAP)LoadImage(NULL, (LPCSTR)"background_1", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+	//	HDC hdcWindow;
+	//	hdcWindow = GetDC(NULL);
+	//	HDC hdcMem = CreateCompatibleDC(hdcWindow); // hDC is a DC structure supplied by Win32API
+	//	SelectObject(hdcMem, hImage);
+	//	StretchBlt(
+	//		hdcWindow,         // destination DC
+	//		g_i_START_X,        // x upper left
+	//		g_i_START_Y,         // y upper left
+	//		g_i_WINDOW_WIDTH,       // destination width
+	//		g_i_WINDOW_HEIGHT,      // destination height
+	//		hdcMem,      // you just created this above
+	//		0,
+	//		0,          // x and y upper left
+	//		g_i_WINDOW_WIDTH-30,          // source bitmap width
+	//		g_i_WINDOW_HEIGHT-30,          // source bitmap height
+	//		SRCCOPY);
+	//}
 	case WM_COMMAND:
 	{
 		static DOUBLE a = DBL_MIN, b = DBL_MIN;
@@ -420,11 +463,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		/*	RECT rect;
 		GetWindowRect(hwnd, &rect);*/
 
-		AppendMenu(cmMain, MF_STRING | MF_UNCHECKED,IDM_SQUARE_BLUE, "Square_Blue");
+		AppendMenu(cmMain, MF_STRING | MF_UNCHECKED, IDM_SQUARE_BLUE, "Square_Blue");
 		AppendMenu(cmMain, MF_STRING, IDM_METAL_MISTRAL, "Metal_mistral");
 		AppendMenu(cmMain, MF_SEPARATOR, NULL, NULL);
 		AppendMenu(cmMain, MF_STRING, IDM_EXIT, "EXIT");
-		
+
 		BOOL selected_item = TrackPopupMenuEx
 		(
 			cmMain,
@@ -436,9 +479,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 		case IDM_SQUARE_BLUE:	SetSkin(hwnd, "square_blue");		break;
 		case IDM_METAL_MISTRAL: SetSkin(hwnd, "metal_mistral");		break;
-		case IDM_EXIT:			SendMessage(hwnd, WM_CLOSE, 0,0);	break;
+		case IDM_EXIT:			SendMessage(hwnd, WM_CLOSE, 0, 0);	break;
 		}
-
 		DestroyMenu(cmMain);
 	}
 	break;
@@ -471,7 +513,7 @@ VOID SetSkin(HWND hwnd, CONST CHAR skin[])
 		);
 		SendMessage(hButton, BM_SETIMAGE, 0, (LPARAM)bmpButton);
 	}
-	const char* sz_button_name[] = { "point","plus", "minus","aster","slash","bsp","clr","equal"};
+	const char* sz_button_name[] = { "point","plus", "minus","aster","slash","bsp","clr","equal" };
 	for (int i = 0; i < 8; i++)
 	{
 		HWND hButton = GetDlgItem(hwnd, IDC_BUTTON_POINT + i);
@@ -487,5 +529,19 @@ VOID SetSkin(HWND hwnd, CONST CHAR skin[])
 		);
 		SendMessage(hButton, BM_SETIMAGE, 0, (LPARAM)bmpButton);
 	}
+	HBITMAP bmpBack = (HBITMAP)LoadImage
+	(
+		GetModuleHandle(NULL),
+		(SETBACK == 2 ? "background_2.bmp" : "background_1.bmp"),
+		IMAGE_BITMAP,
+		300,
+		300,
+		LR_LOADFROMFILE
+	);
+	(skin == "square_blue" ? SETBACK = 2 : SETBACK = 1);
+	SendMessage(hwnd, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpBack);
+	SendMessage(hwnd, WM_ERASEBKGND, 0, 0);
 
+
+	//HBRUSH hbrsh = CreatePatternBrush((HBITMAP)LoadImage(NULL, "background_2.bmp", IMAGE_BITMAP, 290, 280, LR_LOADFROMFILE));
 }

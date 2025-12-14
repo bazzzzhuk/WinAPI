@@ -76,10 +76,10 @@
     <Image Include="..\Calc\ButtonsBMP\square_blue\button_clr.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\calc\buttonsbmp\square_blue\bitmap2.bmp">
+    <Image Include="..\Calc\ButtonsBMP\square_blue\button_equal.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\Calc\ButtonsBMP\square_blue\button_equal.bmp">
+    <Image Include="ButtonsBMP\square_blue\button_0.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<Windows.h>
-#include<winuser.h>
+#include<Winuser.h>
 #include<wchar.h>
 #include<iostream>
 #include <stdio.h>
@@ -10,6 +10,8 @@
 #include<WinDef.h>
 #include"dimensions.h"
 #include"ColorsAndSkins.h"
+//#include<square_blue.h>
+
 
 //#define SETBACK(enter_skin) "background_(enter_skin)"
 //LoadLibrary("..\\square_blue\\");
@@ -98,12 +100,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			GetModuleHandle(NULL),//hInstance
 			NULL
 		);
-		AddFontResourceEx("Fonts\\digital-7.ttf", FR_PRIVATE,0);
+		AddFontResourceEx("Fonts\\digital-7.ttf", FR_PRIVATE, 0);
 		HFONT hFont = CreateFont
 		(
 			g_i_FONT_HEIGHT,
 			g_i_FONT_WIDTH,
-			0,0,
+			0, 0,
 			FW_DONTCARE,//Bold
 			FALSE, //Italic
 			FALSE,
@@ -541,9 +543,9 @@ VOID SetSkin(HWND hwnd, CONST CHAR skin[])
 }
 VOID SetSkinDLL(HWND hwnd, CONST CHAR skin[])
 {
-	//CHAR sz_filename[FILENAME_MAX] = {};
-	//sprintf(sz_filename, "..\\%s", skin);
-	HMODULE hSkin = LoadLibrary(skin);
+	CHAR sz_filename[FILENAME_MAX] = {};
+	sprintf(sz_filename, "..\\%s", skin);
+	HINSTANCE hSkin = LoadLibrary(skin);
 	for (int i = IDC_BUTTON_0; i <= IDC_BUTTON_EQUAL; i++)
 	{
 		HBITMAP hImageLoad = (HBITMAP)LoadImage
@@ -554,7 +556,7 @@ VOID SetSkinDLL(HWND hwnd, CONST CHAR skin[])
 			i == IDC_BUTTON_0 ? g_i_BUTTON_SIZE : g_i_DOUBLE_BUTTON_SIZE,
 			i == IDC_BUTTON_EQUAL ? g_i_DOUBLE_BUTTON_SIZE : g_i_BUTTON_SIZE,
 			LR_SHARED
-		);			
+		);
 		SendMessage(GetDlgItem(hwnd, i), BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hImageLoad);
 	}
 	FreeLibrary(hSkin);

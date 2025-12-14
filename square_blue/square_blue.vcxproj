@@ -141,6 +141,7 @@
     <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\calc\buttonsbmp\square_blue\bitmap2.bmp" />
     <Image Include="..\Calc\ButtonsBMP\square_blue\button_0.bmp" />
     <Image Include="..\Calc\ButtonsBMP\square_blue\button_1.bmp" />
     <Image Include="..\Calc\ButtonsBMP\square_blue\button_2.bmp" />

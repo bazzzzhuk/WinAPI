@@ -55,7 +55,19 @@
     <Image Include="..\Calc\ButtonsBMP\square_blue\button_9.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\Calc\ButtonsBMP\square_blue\button_plus.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Calc\ButtonsBMP\square_blue\button_point.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Calc\ButtonsBMP\square_blue\button_minus.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
     <Image Include="..\Calc\ButtonsBMP\square_blue\button_aster.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Calc\ButtonsBMP\square_blue\button_slash.bmp">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="..\Calc\ButtonsBMP\square_blue\button_bsp.bmp">
@@ -64,19 +76,10 @@
     <Image Include="..\Calc\ButtonsBMP\square_blue\button_clr.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\calc\buttonsbmp\square_blue\bitmap2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
     <Image Include="..\Calc\ButtonsBMP\square_blue\button_equal.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\Calc\ButtonsBMP\square_blue\button_minus.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\Calc\ButtonsBMP\square_blue\button_plus.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\Calc\ButtonsBMP\square_blue\button_point.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\Calc\ButtonsBMP\square_blue\button_slash.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

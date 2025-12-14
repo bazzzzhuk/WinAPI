@@ -546,7 +546,7 @@ VOID SetSkinDLL(HWND hwnd, CONST CHAR skin[])
 	HMODULE hSkin = LoadLibrary(skin);
 	for (int i = IDC_BUTTON_0; i <= IDC_BUTTON_EQUAL; i++)
 	{
-		HBITMAP hBitmap = (HBITMAP)LoadImage
+		HBITMAP hImageLoad = (HBITMAP)LoadImage
 		(
 			hSkin,
 			MAKEINTRESOURCE(i),
@@ -555,7 +555,7 @@ VOID SetSkinDLL(HWND hwnd, CONST CHAR skin[])
 			i == IDC_BUTTON_EQUAL ? g_i_DOUBLE_BUTTON_SIZE : g_i_BUTTON_SIZE,
 			LR_SHARED
 		);			
-		SendMessage(GetDlgItem(hwnd, i), BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hBitmap);
+		SendMessage(GetDlgItem(hwnd, i), BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hImageLoad);
 	}
 	FreeLibrary(hSkin);
 }

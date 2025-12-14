@@ -2,15 +2,7 @@
 // Microsoft Visual C++ generated include file.
 // Used by Resource.rc
 //
-#define IDB_BITMAP_POINT                120
-#define IDB_BITMAP_PLUS                 121
-#define IDB_BITMAP_MINUS                122
-#define IDB_BITMAP_ASTER                123
-#define IDB_BITMAP_SLASH                124
-#define IDB_BITMAP_BSP                  125
-#define IDB_BITMAP_CLR                  126
-#define IDB_BITMAP1                     128
-#define IDB_BITMAP_EQUAL                128
+
 #define IDC_BUTTON_0                    1000
 #define IDC_BUTTON_1                    1001
 #define IDC_BUTTON_2                    1002

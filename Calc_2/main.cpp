@@ -12,11 +12,10 @@
 #include"ColorsAndSkins.h"
 
 //#define SETBACK(enter_skin) "background_(enter_skin)"
-//LoadLibrary("..\\square_blue\\");
+
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 VOID SetSkin(HWND hwnd, CONST CHAR skin[]);
-VOID SetSkinDLL(HWND hwnd, CONST CHAR skin[]);
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT nCmdShow)
 {
@@ -98,12 +97,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			GetModuleHandle(NULL),//hInstance
 			NULL
 		);
-		AddFontResourceEx("Fonts\\digital-7.ttf", FR_PRIVATE,0);
+		AddFontResourceEx("Fonts\\digital-7.ttf", FR_PRIVATE, 0);
 		HFONT hFont = CreateFont
 		(
 			g_i_FONT_HEIGHT,
 			g_i_FONT_WIDTH,
-			0,0,
+			0, 0,
 			FW_DONTCARE,//Bold
 			FALSE, //Italic
 			FALSE,
@@ -218,8 +217,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			GetModuleHandle(NULL),
 			NULL
 		);
-		SetSkinDLL(hwnd, "square_blue");
-		//SetSkin(hwnd, (SETBACK == 2 ? "square_blue" : "metal_mistral"));
+
+		SetSkin(hwnd, (SETBACK == 2 ? "square_blue" : "metal_mistral"));
 	}
 	break;
 	case WM_CTLCOLOREDIT:
@@ -474,7 +473,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case IDM_EXIT:			SendMessage(hwnd, WM_CLOSE, 0, 0);	break;
 		}
 		InvalidateRect(hwnd, 0, TRUE);
-		SetSkinDLL(hwnd, g_sz_SKIN[skinID]);
+		SetSkin(hwnd, g_sz_SKIN[skinID]);
 		DestroyMenu(cmMain);
 	}
 	break;
@@ -538,24 +537,4 @@ VOID SetSkin(HWND hwnd, CONST CHAR skin[])
 
 
 	//HBRUSH hbrsh = CreatePatternBrush((HBITMAP)LoadImage(NULL, "background_2.bmp", IMAGE_BITMAP, 290, 280, LR_LOADFROMFILE));
-}
-VOID SetSkinDLL(HWND hwnd, CONST CHAR skin[])
-{
-	//CHAR sz_filename[FILENAME_MAX] = {};
-	//sprintf(sz_filename, "..\\%s", skin);
-	HMODULE hSkin = LoadLibrary(skin);
-	for (int i = IDC_BUTTON_0; i <= IDC_BUTTON_EQUAL; i++)
-	{
-		HBITMAP hBitmap = (HBITMAP)LoadImage
-		(
-			hSkin,
-			MAKEINTRESOURCE(i),
-			IMAGE_BITMAP,
-			i == IDC_BUTTON_0 ? g_i_BUTTON_SIZE : g_i_DOUBLE_BUTTON_SIZE,
-			i == IDC_BUTTON_EQUAL ? g_i_DOUBLE_BUTTON_SIZE : g_i_BUTTON_SIZE,
-			LR_SHARED
-		);			
-		SendMessage(GetDlgItem(hwnd, i), BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hBitmap);
-	}
-	FreeLibrary(hSkin);
 }

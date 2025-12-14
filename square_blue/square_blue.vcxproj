@@ -159,6 +159,7 @@
     <Image Include="..\Calc\ButtonsBMP\square_blue\button_plus.bmp" />
     <Image Include="..\Calc\ButtonsBMP\square_blue\button_point.bmp" />
     <Image Include="..\Calc\ButtonsBMP\square_blue\button_slash.bmp" />
+    <Image Include="ButtonsBMP\metal_mistral\button_0.bmp" />
     <Image Include="ButtonsBMP\square_blue\button_0.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

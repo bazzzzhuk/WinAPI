@@ -545,7 +545,7 @@ VOID SetSkinDLL(HWND hwnd, CONST CHAR skin[])
 {
 	CHAR sz_filename[FILENAME_MAX] = {};
 	sprintf(sz_filename, "..\\%s\\.", skin);
-	HINSTANCE hSkin = LoadLibrary("square_blue.dll");
+	HINSTANCE hSkin = LoadLibrary(skin);
 	for (int i = IDC_BUTTON_0; i <= IDC_BUTTON_EQUAL; i++)
 	{
 		HBITMAP hImageLoad = (HBITMAP)LoadImage

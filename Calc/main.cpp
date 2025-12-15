@@ -543,8 +543,6 @@ VOID SetSkin(HWND hwnd, CONST CHAR skin[])
 }
 VOID SetSkinDLL(HWND hwnd, CONST CHAR skin[])
 {
-	CHAR sz_filename[FILENAME_MAX] = {};
-	sprintf(sz_filename, "..\\%s\\.", skin);
 	HINSTANCE hSkin = LoadLibrary(skin);
 	for (int i = IDC_BUTTON_0; i <= IDC_BUTTON_EQUAL; i++)
 	{
@@ -553,7 +551,7 @@ VOID SetSkinDLL(HWND hwnd, CONST CHAR skin[])
 			hSkin,
 			MAKEINTRESOURCE(i),
 			IMAGE_BITMAP,
-			i == IDC_BUTTON_0 ? g_i_BUTTON_SIZE : g_i_DOUBLE_BUTTON_SIZE,
+			i == IDC_BUTTON_0 ? g_i_DOUBLE_BUTTON_SIZE : g_i_BUTTON_SIZE,
 			i == IDC_BUTTON_EQUAL ? g_i_DOUBLE_BUTTON_SIZE : g_i_BUTTON_SIZE,
 			LR_SHARED
 		);

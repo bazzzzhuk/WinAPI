@@ -459,6 +459,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		AppendMenu(cmMain, MF_STRING | MF_UNCHECKED, IDM_SQUARE_BLUE, "Square_Blue");
 		AppendMenu(cmMain, MF_STRING, IDM_METAL_MISTRAL, "Metal_mistral");
+		AppendMenu(cmMain, MF_STRING, IDM_SILVER_SPB, "Silver_spb");
 		AppendMenu(cmMain, MF_SEPARATOR, NULL, NULL);
 		AppendMenu(cmMain, MF_STRING, IDM_EXIT, "EXIT");
 
@@ -473,6 +474,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 		case IDM_SQUARE_BLUE:	skinID = 0;	break;
 		case IDM_METAL_MISTRAL: skinID = 1; break;
+		case IDM_SILVER_SPB:	skinID = 2; break;
 		case IDM_EXIT:			SendMessage(hwnd, WM_CLOSE, 0, 0);	break;
 		}
 		InvalidateRect(hwnd, 0, TRUE);

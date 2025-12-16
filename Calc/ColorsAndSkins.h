@@ -7,8 +7,9 @@ CONST INT g_i_FONT_COLOR = 2;
 CONST COLORREF g_clr_COLORS[][3] =
 {
 	{RGB(0,150,100), RGB(0,70,100), RGB(150,200,0)},
-	{RGB(150,150,150), RGB(50,50,50), RGB(0,255,0)}
+	{RGB(150,150,150), RGB(50,50,50), RGB(0,255,0)},
+	{RGB(180,180,180), RGB(50,50,50), RGB(200,200,200)}
 };
-CONST CHAR* g_sz_SKIN[] = { "square_blue", "metal_mistral" };
+CONST CHAR* g_sz_SKIN[] = { "square_blue", "metal_mistral","spb_silver"};
 
 static INT SETBACK = 2;

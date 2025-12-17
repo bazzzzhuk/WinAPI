@@ -31,6 +31,8 @@
 
 #define IDB_BACKGROUND_1		2001
 
+#define IDI_ICON1				130
+
 
 
 

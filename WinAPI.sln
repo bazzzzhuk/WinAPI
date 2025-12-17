@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Resource-onlyDll", "Resourc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "spb_silver", "spb_silver\spb_silver.vcxproj", "{A8506B7C-02E1-4469-8313-1F70A30DFBB6}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "CalcSetup", "CalcSetup\CalcSetup.vdproj", "{1F3ACB5C-8630-405B-939E-1904D096829A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -101,6 +103,10 @@ Global
 		{A8506B7C-02E1-4469-8313-1F70A30DFBB6}.Release|x64.Build.0 = Release|x64
 		{A8506B7C-02E1-4469-8313-1F70A30DFBB6}.Release|x86.ActiveCfg = Release|Win32
 		{A8506B7C-02E1-4469-8313-1F70A30DFBB6}.Release|x86.Build.0 = Release|Win32
+		{1F3ACB5C-8630-405B-939E-1904D096829A}.Debug|x64.ActiveCfg = Debug
+		{1F3ACB5C-8630-405B-939E-1904D096829A}.Debug|x86.ActiveCfg = Debug
+		{1F3ACB5C-8630-405B-939E-1904D096829A}.Release|x64.ActiveCfg = Release
+		{1F3ACB5C-8630-405B-939E-1904D096829A}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
